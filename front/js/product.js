@@ -58,6 +58,28 @@ function addToCart(id, color, qty, price) {
     newCart.push(cart);
     localStorage.setItem("products", JSON.stringify(newCart));
   }
+  // empeche de l'ajout de chiffre negatif et decimal
+  document
+    .querySelector('[name="itemQuantity"]')
+    .addEventListener("keyup", controlQuantity);
+  document
+    .querySelector('[name="itemQuantity"]')
+    .addEventListener("keypress", function (event) {
+      if (event.key === ".") {
+        event.preventDefault();
+      }
+      if (event.key === ",") {
+        event.preventDefault();
+      }
+    });
+
+  function controlQuantity() {
+    const quantity = document.querySelector("#quantity").value;
+    if (quantity != null) {
+      if (quantity < 0) document.querySelector("#quantity").value = 0;
+      if (quantity > 100) document.querySelector("#quantity").value = 100;
+    }
+  }
 }
 //Ajout au panier du choix client
 button.addEventListener("click", function () {
